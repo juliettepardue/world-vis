@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+      <!-- JS Libraries -->
+      <!-- jQuery -->
+      <script type="text/javascript" src="jQuery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="jQuery/plugins/jquery.color.plus-names-2.1.2.min.js"></script>
+      <script type="text/javascript" src="jQuery/plugins/color_mixer.min.js"></script>
+      <script type="text/javascript" src="jQuery/plugins/jquery.assert.min.js"></script>
+      <script type="text/javascript" src="jQuery/plugins/jquery-mousefling-0.1.0.min.js"></script>
+      <!-- jQuery UI -->
+      <script type="text/javascript" src="jQueryUI/jquery-ui.min.js"></script>
+      <link type="text/css" rel="stylesheet" href="jQueryUI/overcast/jquery-ui.min.css">
+	<!-- D3 -->
+	<script type="text/javascript" src="d3/d3.v3.min.js"></script>
+	<script type="text/javascript" src="d3/d3.geo.projection.v0.min.js"></script>
+	<script type="text/javascript" src="d3/topojson.v1.min.js"></script>
+	<!-- NVD3 -->
+	<script type="text/javascript" src="nvd3/nv.d3.min.js"></script>
+	<link type="text/css" rel="stylesheet" href="nvd3/nv.d3.min.css">
+	  <!-- ColorBrewer -->
+	  <link type="text/css" rel="stylesheet" href="colorbrewer/colorbrewer.min.css">
+	    <script type="text/javascript" src="colorbrewer/colorbrewer.min.js"></script>
+	    <!-- zlib.js -->
+	    <script type="text/javascript" src="zlib-js/gunzip.min.js"></script>
+	    
+	    <!-- Custom JS -->
+	    <link type="text/css" rel="stylesheet" href="css/style.css">
+	      <script type="text/javascript" src="js/icanhazloadingscreen.js"></script>
+	      <script type="text/javascript" src="js/functionalExtensions.js"></script>
+	      <script type="text/javascript" src="js/stringExtensions.js"></script>
+	      <script type="text/javascript" src="js/d3JSONGzip.js"></script>
+	      <script type="text/javascript" src="js/data.js"></script>
+	      <script type="text/javascript" src="js/globe.js"></script>
+	      <script type="text/javascript" src="js/map.js"></script>
+	      <script type="text/javascript" src="js/countryCss.js"></script>
+	      <script type="text/javascript" src="js/ui.js"></script>
+	      <script type="text/javascript" src="js/dataFilters.js"></script>
+  </head>
+  <body>
+    <div id="loadingboxcontainer">
+      <div id="loadingbox">
+	<div class="progressbar">
+	  <div class="progresslabelcontainer">
+	    <div class="progresslabel">Loading...</div>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <script type="text/javascript">yellLoadingStartsNow();</script>
+    <div id="container">
+      <div id="mapcontainer_outer">
+	<div id="mapcontainer" class="svgcontainer">
+	  <svg id="map">
+	  </svg>
+	</div>
+      </div>
+      <div id="globecontainer_outer">
+	<div id="globecontainer" class="svgcontainer">
+          <svg id="globe">
+            <defs>
+              <radialGradient id="boundingCircleFill" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+		<stop offset="0%" style="stop-color:#eee; stop-opacity:0.8" />
+		<stop offset="10%" style="stop-color:#eee; stop-opacity:.8" />
+		<stop offset="20%" style="stop-color:#eee; stop-opacity:.79" />
+		<stop offset="30%" style="stop-color:#eee; stop-opacity:.78" />
+		<stop offset="40%" style="stop-color:#eee; stop-opacity:.76" />
+		<stop offset="50%" style="stop-color:#eee; stop-opacity:.73" />
+		<stop offset="60%" style="stop-color:#eee; stop-opacity:.7" />
+		<stop offset="50%" style="stop-color:#eee; stop-opacity:.66" />
+		<stop offset="80%" style="stop-color:#eee; stop-opacity:.6" />
+		<stop offset="90%" style="stop-color:#eee; stop-opacity:.52" />
+		<stop offset="100%" style="stop-color:#eee; stop-opacity:.3" />
+	      </radialGradient>
+	    </defs>
+	  </svg>
+	</div>
+      </div>
+      <div id="uicontainer">
+	<div id="mapradio">
+	  <input type="radio" id="mapradio_2d" name="mapradio"><label for="mapradio_2d">2D</label>
+	  <input type="radio" id="mapradio_globe" name="mapradio" checked="checked"><label for="mapradio_globe">Globe</label>
+	</div>
+	<div id="toolbox">
+	  <button id="settings">Settings</button>
+	  <button id="about">About</button>
+	</div>
+	<div id="subtypecontainer">
+	  <div id="a_container_outer">
+	    <input type="checkbox" id="a_total" checked="checked"><label for="a_total">Influenza type A (total)</label>
+	  </div>
+	  <div id="b_container_outer">
+	    <input type="checkbox" id="b_total" checked="checked"><label for="b_total">Influenza type B (total)</label>
+	  </div>
+	</div>
+	<div id="slidercontainer">
+	  <div id="play">play</div>
+	  <div id="slidercontainer_inner">
+	    <div id="slider">
+	      <svg id="chart1svg">
+	      </svg>
+	      <div id="chart1label">Type A</div>
+	      <div id="timelabel"></div>
+	      <svg id="chart2svg">
+	      </svg>
+	      <div id="chart2label">Type B</div>
+	    </div>
+	  </div>
+	</div>
+	<div id="aboutbox">
+	  <p>The World Health Organization's Global Influenza Surveillance and Response System (GISRS) has been in operation since 1995, and aggregates infected sample data weekly from laboratories and flu centers around the world. The FluNet website was constructed to provide access to this data, but the ability to visualize this data is limited by its outdated, inefficient front-end. This is a fresh visualization built around the GISRS data, showing the propagation of influenza across the globe over time.</p>
+	  <h3>Data</h3>
+	  <p>All the data used in this tool can be downloaded here:</p>
+	  <p>
+	    <a href="data/flunet_data.json">JSON</a>
+	    <a href="data/flunet_data.json.gz">JSON (GZipped)</a>
+	    <a href="data/flunet_data.xlsx">Microsoft Excel</a>
+	  </p>
+	  <h3>Acknowledgements</h3>
+	  <p>We would like to thank the World Health Organization (WHO) for the GISRS and the data it provides. Despite our overall low opinion of the frontend applied to it, the effort that has gone into collecting this data is clearly Herculean, and the data itself is an invaluable contribution to science. We hope that our work will produce more public interest in the WHO’s scientific efforts.</p>
+	  <p>We would also like to thank the World Bank and the United States Census Bureau for providing the population and area data used in our dynamic filters.</p>
+	  <p>The United Nations Statistics Division provided the mappings of ISO 3166-1 alpha-3 codes to names, which are used to pair GISRS data with geographic regions.
+	  </p>
+	  <h3>Open Source Licenses</h3>
+	  <h4>jQuery, jQuery UI, jquery-color</h4>
+	  <pre>Copyright 2013 jQuery Foundation and other contributors,
+	  http://jquery.com
+	  
+	  Permission is hereby granted, free of charge, to any person obtaining
+	  a copy of this software and associated documentation files (the
+	  "Software"), to deal in the Software without restriction, including
+	  without limitation the rights to use, copy, modify, merge, publish,
+	  distribute, sublicense, and/or sell copies of the Software, and to
+	  permit persons to whom the Software is furnished to do so, subject to
+	  the following conditions:
+	  
+	  The above copyright notice and this permission notice shall be
+	  included in all copies or substantial portions of the Software.
+	  
+	  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+	  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+	  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+	  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+	  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+	  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</pre>
+	  <h4>jquery-mousefling</h4>
+	  <pre>Copyright (c) 2012, Luke Siedle
+	  All rights reserved.
+	  
+	  Redistribution and use in source and binary forms, with or without
+	  modification, are permitted provided that the following conditions are met:
+	  
+	  1. Redistributions of source code must retain the above copyright notice, this
+	  list of conditions and the following disclaimer.
+	  2. Redistributions in binary form must reproduce the above copyright notice,
+	  this list of conditions and the following disclaimer in the documentation
+	  and/or other materials provided with the distribution.
+	  
+	  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+	  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+	  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+	  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+	  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+	  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+	  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+	  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</pre>
+	  <h4>D3</h4>
+	  <pre>Copyright 2013 Mike Bostock.
+	  All rights reserved.
+	  
+	  Redistribution and use in source and binary forms, with or without
+	  modification, are permitted provided that the following conditions are met:
+	  
+	  1. Redistributions of source code must retain the above copyright notice, this
+	  list of conditions and the following disclaimer.
+	  2. Redistributions in binary form must reproduce the above copyright notice,
+	  this list of conditions and the following disclaimer in the documentation
+	  and/or other materials provided with the distribution.
+	  
+	  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+	  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+	  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+	  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+	  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+	  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+	  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+	  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</pre>
+	  <h4>NVD3</h4>
+	  <pre>Copyright (c) 2011, 2012 Novus Partners, Inc.
+	  
+	  Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+	  this file except in compliance with the License. You may obtain a copy of the
+	  License at
+	  
+	  http://www.apache.org/licenses/LICENSE-2.0
+	  
+	  Unless required by applicable law or agreed to in writing, software distributed
+	  under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+	  CONDITIONS OF ANY KIND, either express or implied. See the License for the
+	  specific language governing permissions and limitations under the License.</pre>
+	</div>
+	<div id="settingsbox">
+	  <div>
+	    <input type="checkbox" id="pop_box" checked="checked"><label for="pop_box">Use Population Filter</label>
+	    <button id="pop_box_btn">Population Filter</button>
+	    <p id="pop_box_btn_text">
+	      Countries have different numbers of people in them, and this leads to different numbers of infected samples, even when the infection rate itself is identical. This filter allows you compare virulence rather than numbers of patients by basing map colors on the number of infected samples per person.
+	    </p>
+	  </div>
+	  <div>
+	    <input type="checkbox" id="area_box" checked="checked"><label for="area_box">Use Area Filter</label>
+	    <button id="area_box_btn">Area Filter</button>
+	    <p id="area_box_btn_text">
+	      Different countries have different areas, and thus take up different amounts of space on the screen. A larger country, if colored the same as a smaller country, will appear to be more infected simply because of the quantity of space covered by the larger country’s color. This filter corrects for this by dispensing equal amount of “ink” to color each country, no matter its size.
+	    </p>
+	  </div>
+	  <div>
+	    <input type="checkbox" id="ff_box" checked="checked"><label for="ff_box">Use Participation Rate Filter</label>
+	    <button id="ff_box_btn">Participation Rate Filter</button>
+	    <p id="ff_box_btn_text">
+	      GISRS participation rates vary between countries and between years. This filter attempts to correct for these factors.
+	    </p>
+	  </div>
+	  <div>
+	    <input type="checkbox" id="bb_box"><label for="bb_box">Enhance Visibility of Influenza Type B</label>
+	    <button id="bb_box_btn">Influenza Type B Visibility Enhancement</button>
+	    <p id="bb_box_btn_text">
+	      The propagation of Influenza type B can be hard to visualize because Type A is so widespread. This filter amplifies the visibility of type B by a factor of 10, allowing you to see its spread better even when it is relatively overwhelmed by type A.
+	    </p>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <div id="footer">
+      <p><a href="README.md">README.md</a>, Branch: dev
+	<br/>Based on CS 725 Project by Reid Rankin and Ayush Khandelwal
+      </p>
+    </div>
+  </body>
+</html>

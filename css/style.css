@@ -1,0 +1,392 @@
+body {
+  background: url(texture-noise.png);
+  overflow: visible;
+  margin: 0;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica;
+  text-align: center;
+}
+
+#loadingboxcontainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center;
+	z-index: 999;
+	background-color: rgba(200, 200, 200, 0.5);
+}
+
+#loadingbox {
+  padding-top: 300px;
+  position: relative;
+  width: 400px;
+  height: 300px;
+  margin: auto;
+}
+
+.progressbar {
+	position: relative;
+}
+.progresslabelcontainer {
+	position: absolute;
+	text-align: center;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+.progresslabel {
+	margin: auto;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #fff;
+}
+
+#container {
+  width: 1280px;
+  height: 900px;
+  position: relative;
+  margin: auto;
+  opacity: 0;
+}
+
+#container > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#uicontainer {
+  pointer-events: none;
+}
+
+#uicontainer > * {
+  pointer-events: auto;
+}
+
+.svgcontainer {
+	text-align: center;
+}
+
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .3;
+}
+
+#globecontainer, #mapcontainer {
+  position: absolute;
+  top: 60px; 
+  bottom: 115px;
+  left: 50px;
+  right: 50px;
+  display: none;
+}
+
+#globecontainer_outer {
+    pointer-events: none;
+}
+
+#globe {
+  margin: auto;
+  pointer-events: all;
+  width: auto;
+}
+
+#globe .boundingCircle {
+  fill: url(#boundingCircleFill);
+  stroke: black;
+  stroke-width: 3;
+}
+
+#globe .country {
+  fill: rgba(221, 221, 221, 0.5);
+  stroke: #000;
+}
+
+#globe .frontcontainer {
+  opacity: 0.8;
+}
+
+#globe .backcontainer {
+  opacity: 0.8;
+}
+
+#map {
+  margin: auto;
+  pointer-events: all;
+}
+
+#map .boundingCircle {
+  fill: #eee;
+  stroke: black;
+  stroke-width: 3;
+}
+
+#map .country {
+  fill: rgba(221, 221, 221, 1.0);
+  stroke: #000;
+}
+
+#slidercontainer {
+	height: 100px;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+#play {
+	position: absolute;
+	left: 10px;
+	width: 40px;
+	top: 0;
+	height: 50px;
+	bottom: 0;
+}
+
+#slidercontainer_inner {
+	position: absolute;
+	top: 0;
+	left: 60px;
+	bottom: 0;
+	right: 10px;
+}
+
+#slider {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	height: 100%;
+}
+
+#slider .ui-slider-handle {
+	height: 100%;
+	top: -1px;
+	background: none;
+}
+
+#chart1svg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 50;
+	right: 0;
+	height: 50px;
+}
+
+#chart2svg {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 50px;
+	border-top: solid #000;
+	border-width: 1px;
+}
+
+
+#timelabel {
+	position: absolute;
+	opacity: 0.6;
+	top: 3px;
+	left: 25px;
+	height: 45px;
+	line-height: 45px;
+	font-weight: bold; 
+}
+
+#chart1label {
+	position: absolute;
+	opacity: 0.6;
+	top: 0;
+	left: 2px;
+	height: 20px;
+	line-height: 20px;
+}    
+
+#chart2label {
+    position: absolute;
+    opacity: 0.6;
+    bottom: 30px;
+    left: 2px;
+    height: 20px;
+    line-height: 20px;
+}
+
+
+#mapradio {
+	position: absolute;
+	left: 10px;
+	bottom: 110px;
+}
+
+#toolbox {
+	position: absolute;
+	right: 10px;
+	bottom: 110px;
+}
+
+.countryPopoutDialog {
+	background-color: white !important;
+	border-radius: 5px;
+	overflow: hidden !important;
+}
+
+/*.countryPopoutDialog .nv-area {
+	pointer-events: none !important;
+}*/
+
+.countryPopoutDialog .nv-point {
+	display: none !important;
+}
+
+/*.countryPopoutDialog .nv-scatterWrap {
+	display: none !important;
+}*/
+
+/*.countryPopoutDialog .nvtooltip {
+	pointer-events: none;
+}*/
+
+.ui-button.ui-state-active.globeRunning {
+	color: orange;
+}
+
+#subtypecontainer {
+	position: absolute;
+	width: auto;
+	height: auto;
+	top: 10px;
+	left: 60px;
+}
+
+#subtypecontainer div {
+	float: left;
+}
+
+#subtypecontainer .ui-widget-header {
+	padding: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#a_container_outer {
+	float: left;
+	width: 580px;
+}
+
+#b_container_outer {
+	float: left;
+}
+
+#a_container_outer > * {
+	float: right;
+}
+
+#b_container_outer > * {
+	float: left;
+}
+
+#subtypecontainer .ui-button-text {
+	font-size: 0.75em;
+}
+
+#a_container_outer > label, #b_container_outer > label {
+	margin-top: 10px;
+}
+
+#a_container, #b_container {
+	display: none;
+}
+
+#subtypecontainer label.ui-state-active {
+	background-image:none;
+}
+
+#subtypecontainer label[for='a_total'].ui-state-active {
+	background-color: #AF2F35;
+}
+#subtypecontainer label[for='b_total'].ui-state-active {
+	background-color: #2968A7;
+}
+
+.countryPopoutDialog {
+	padding-left: 50px !important;
+	padding-bottom: 15px !important;
+}
+
+.countryPopoutDialog .yLabel {
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+	
+	-webkit-transform-origin: 50% 50%;
+	-moz-transform-origin: 50% 50%;
+	-ms-transform-origin: 50% 50%;
+	-o-transform-origin: 50% 50%;
+	transform-origin: 50% 50%;
+	
+	position: absolute;
+	top: 50%;
+	width: 210px;
+	height: 0;
+	left: -95px;
+	
+	font-weight: bold;
+}
+
+.countryPopoutDialog .xLabel {
+	position: absolute;
+	text-align: center;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+.ui-dialog .ui-dialog-title {
+	float: none;
+}
+
+#aboutbox, #settingsbox {
+	display:none;
+	background-color: white !important;
+	border-radius: 5px;
+	text-align: left;
+}
+
+#settingsbox {
+	text-align: left;
+	font-size: 0.75em;
+}
+
+#settingsbox > div{
+	height: 30px;
+}
+
+#settingsbox button {
+	float: right;
+	height: 100%;
+}
+
+#pop_box_btn_text, #area_box_btn_text, #ff_box_btn_text, #bb_box_btn_text {
+	display: none;
+	border-radius: 5px;
+	background-color: white !important;
+	font-size: 0.75em;
+}
+
+#footer {
+    text-align: right; 
+    margin-top: 10px;
+    margin-right: 15px;
+}
