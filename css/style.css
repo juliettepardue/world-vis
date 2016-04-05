@@ -82,7 +82,7 @@ body {
 
 #globecontainer, #mapcontainer {
   position: absolute;
-  top: 60px; 
+  top: 110px; 
   bottom: 115px;
   left: 50px;
   right: 50px;
@@ -192,10 +192,10 @@ body {
 
 
 #timelabel {
+	font-size:32px;
 	position: absolute;
 	opacity: 0.6;
 	top: 3px;
-	left: 25px;
 	height: 45px;
 	line-height: 45px;
 	font-weight: bold; 
@@ -259,15 +259,11 @@ body {
 }
 
 #subtypecontainer {
-	position: absolute;
+	/*position: absolute;*/
 	width: auto;
 	height: auto;
-	top: 10px;
-	left: 60px;
-}
-
-#subtypecontainer div {
-	float: left;
+	margin-top: 25px;
+	/*left: 60px;*/
 }
 
 #subtypecontainer .ui-widget-header {
