@@ -37,7 +37,6 @@
 	      <script type="text/javascript" src="js/map.js"></script>
 	      <script type="text/javascript" src="js/countryCss.js"></script>
 	      <script type="text/javascript" src="js/ui.js"></script>
-	      <script type="text/javascript" src="js/dataFilters.js"></script>
   </head>
   <body>
     <div id="loadingboxcontainer">
@@ -87,25 +86,17 @@
 	  <button id="settings">Settings</button>
 	  <button id="about">About</button>
 	</div>
-	<div id="subtypecontainer">
-	  <div id="a_container_outer">
-	    <input type="checkbox" id="a_total" checked="checked"><label for="a_total">Influenza type A (total)</label>
-	  </div>
-	  <div id="b_container_outer">
-	    <input type="checkbox" id="b_total" checked="checked"><label for="b_total">Influenza type B (total)</label>
+	<div id="subtypecontainer" style="margin-top:10px;">
+	  <div id="input_data" style="width:100%;display:block;text-align:center;margin-bottom:10px;"></div>
+	  <div style="width:100%;display:block;text-align:center;">
+	    <input type="file" name="filename" id="filename">
 	  </div>
 	</div>
 	<div id="slidercontainer">
 	  <div id="play">play</div>
 	  <div id="slidercontainer_inner">
 	    <div id="slider">
-	      <svg id="chart1svg">
-	      </svg>
-	      <div id="chart1label">Type A</div>
 	      <div id="timelabel"></div>
-	      <svg id="chart2svg">
-	      </svg>
-	      <div id="chart2label">Type B</div>
 	    </div>
 	  </div>
 	</div>
