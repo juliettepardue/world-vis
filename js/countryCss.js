@@ -1,6 +1,5 @@
 // countryCss.js
 // determines appropriate color for each country
-// HOW IS THIS DIFFERENT THAN countryCssNewAndBroken.js?
 
 var countryColorRules = [];
 function colorCountry(countryName, color) {
@@ -17,18 +16,18 @@ function clearCountryColors() {
 	}
 }
 
-var updateMapStylesForYearAndWeek = function (year, week) {
+var updateMapStylesForYear = function (year) {
 	var colorFunc = function(row) {
 		var fillcolor = $.Color("#FFFFFF");
 		var tints = [];
-		currentSubtypeSet.forEach(function(subtype){
-			var scalefactor = (subtype.name in row.scalefactors ? row.scalefactors[subtype.name] : 1.0);
-			var value_normalized = (row[subtype.name] * scalefactor) / flunetNormalizers[row.weekindex];
-			var tintcolor = $.Color("transparent").transition($.Color(subtype.color), value_normalized);
-			tints.push({
-				color: tintcolor,
-				valueNormalized: value_normalized
-			});
+		var subtype = currentSubtypeSet;
+		
+		var scalefactor = (subtype.name in row.scalefactors ? row.scalefactors[subtype.name] : 1.0);
+		var value_normalized = (row[subtype.name] * scalefactor);
+		var tintcolor = $.Color("transparent").transition($.Color(subtype.color), value_normalized);
+		tints.push({
+			color: tintcolor,
+			valueNormalized: value_normalized
 		});
 		
 		var totalTintValues = fold(function(acc, item) { return acc + item.valueNormalized; }, 0, tints);
@@ -44,8 +43,8 @@ var updateMapStylesForYearAndWeek = function (year, week) {
 	};
 	clearCountryColors();
 	
-	$.each(flunet.where(function (row) {
-		return row.year == year && row.week == week;
+	$.each(dataset[selected].where(function (row) {
+		return row.year == year;
 	}), function (index, row) {
 		colorCountry(row.country, colorFunc(row).toHexString());
 	});
